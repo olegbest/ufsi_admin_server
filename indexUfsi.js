@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const routes = require('./routes/posts');
 
-app.use(cors({origin: ['http://localhost:8080','http://www.admin.ufsi24.com/']}));
+app.use(cors({origin: ['http://localhost:8080','http://www.admin.ufsi24.com']}));
 
 app.use(bodyParser.urlencoded({
     extended: true
