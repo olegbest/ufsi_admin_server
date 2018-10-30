@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT || 8082;
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const https = require('https')
 
 const cors = require('cors');
 
@@ -20,8 +21,13 @@ app.use(bodyParser.json());
 let Routes = new routes(app);
 Routes.setup();
 
-app.listen(port);
-console.log('The magic happens on port ' + port);
+https.createServer({
+    key: fs.readFileSync(__dirname+'/keys/server.key'),
+    cert: fs.readFileSync(__dirname+'/keys/server.cert')
+}, app)
+    .listen(port, function () {
+        console.log('Example app listening on port 3000! Go to https://localhost:/'+port)
+    })
 
 
 
