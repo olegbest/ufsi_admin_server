@@ -138,6 +138,33 @@ class Routes {
             let result = await getUsers(this.siteReklamaModel);
             res.send(result || 200);
         })
+        this.app.post("/users", async (req, res, next) => {
+            let result;
+            console.log(req.session)
+            // console.log(req)
+            if (req.session) {
+                if(req.session.admin === "admin"){
+                    result = {auth: true}
+                } else {
+                    result = {auth: false};
+                }
+            }
+            res.send(result || 200);
+        });
+        this.app.post("/users-auth", async (req, res, next) => {
+            let result;
+            console.log(req.body)
+            // console.log(req)
+            if (req.body) {
+                if(req.body.user === "admin" && req.body.pass === "0p2iMpR8thtc"){
+                    result = {auth: true};
+                    req.session.admin = "admin"
+                } else {
+                    result = {auth: false};
+                }
+            }
+            res.send(result || 200);
+        })
     }
 }
 
