@@ -13,6 +13,7 @@ class Routes {
         this.facebookModel = ArticleModel.facebook_promo;
         this.facebookModelPackages = ArticleModel.facebook_packages;
         this.facebookModelStages = ArticleModel.facebook_stages;
+        this.siteReklamaModel = ArticleModel.site_reklama
     }
 
     setup() {
@@ -118,6 +119,25 @@ class Routes {
                 }
             }
         });
+        this.app.post("/get-reklama", async (req, res) => {
+            if (req.body) {
+                let data = req.body;
+                let type = data.messenger || "yandex";
+                console.log(data);
+                let obj = await updateModel(this.siteReklamaModel, {id: data.id}, {type: type, value: data.text});
+                let rek = await this.siteReklamaModel.find({id: "1"})
+                console.log(rek);
+                let answer = obj || 200;
+                console.log(answer);
+                res.send(answer);
+                return;
+            }
+            res.sendStatus(200);
+        })
+        this.app.post("/get-reklama-all", async (req, res) => {
+            let result = await getUsers(this.siteReklamaModel);
+            res.send(result || 200);
+        })
     }
 }
 
@@ -159,5 +179,10 @@ async function deletePromo(model, promo_id) {
 async function getUsers(model) {
     return await model.find();
 }
+
+async function updateModel(model, option, data) {
+    return await model.findOneAndUpdate(option, data);
+}
+
 
 module.exports = Routes;
