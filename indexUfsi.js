@@ -21,15 +21,16 @@ app.use(bodyParser.json());
 let Routes = new routes(app);
 Routes.setup();
 
-https.createServer({
-    key: fs.readFileSync(__dirname+'/keys/server.key'),
-    cert: fs.readFileSync(__dirname+'/keys/server.cert')
-}, app)
-    .listen(port, function () {
-        console.log('Example app listening on port 3000! Go to https://localhost:/'+port)
-    })
+app.listen(port);
+console.log('The magic happens on port ' + port);
 
-
+// https.createServer({
+//     key: fs.readFileSync(__dirname+'/keys/server.key'),
+//     cert: fs.readFileSync(__dirname+'/keys/server.cert')
+// }, app)
+//     .listen(port, function () {
+//         console.log('Example app listening on port 3000! Go to https://localhost:/'+port)
+//     })
 
 
 
