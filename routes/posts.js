@@ -165,6 +165,9 @@ class Routes {
             }
             res.send(result || 200);
         })
+        this.app.post("/ufsi", async (req, res) => {
+            console.log("Работает")
+        })
     }
 }
 
