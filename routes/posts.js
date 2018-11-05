@@ -1,4 +1,5 @@
 const ArticleModel = require('./../lib/mongoose');
+const gSheet = require('./../googleapi/index');
 
 class Routes {
     constructor(app) {
@@ -143,7 +144,7 @@ class Routes {
             console.log(req.session)
             // console.log(req)
             if (req.session) {
-                if(req.session.admin === "admin"){
+                if (req.session.admin === "admin") {
                     result = {auth: true}
                 } else {
                     result = {auth: false};
@@ -156,7 +157,7 @@ class Routes {
             console.log(req.body)
             // console.log(req)
             if (req.body) {
-                if(req.body.user === "admin" && req.body.pass === "0p2iMpR8thtc"){
+                if (req.body.user === "admin" && req.body.pass === "0p2iMpR8thtc") {
                     result = {auth: true};
                     req.session.admin = "admin"
                 } else {
@@ -213,6 +214,27 @@ async function getUsers(model) {
 async function updateModel(model, option, data) {
     return await model.findOneAndUpdate(option, data);
 }
+
+
+setInterval(async () => {
+
+    let data = [];
+    let usersTelegram = await getUsers(ArticleModel.telegram_users);
+    let usersFacebook = await getUsers(ArticleModel.facebook_users);
+    for (let i = 0; i < usersTelegram.length; i++) {
+        let u = usersTelegram[i]._doc;
+        data.push([u.info.id, u.email, u.phone, u.weight, u.name, u.gender, u.age, u.country, u.city]);
+    }
+    await gSheet.remove("A3:T");
+    await gSheet.add("K3:S", data);
+    data = [];
+    for (let i = 0; i < usersFacebook.length; i++) {
+        let u = usersFacebook[i]._doc;
+        data.push([u.uid, u.email, u.phone, u.weight, u.name, u.gender, u.age, u.country, u.city]);
+    }
+    await gSheet.add("A3:I", data);
+
+}, 5000);
 
 
 module.exports = Routes;
