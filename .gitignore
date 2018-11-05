@@ -1,3 +1,6 @@
 lib/config.json
 keys
 node_modules
+package-lock.json
+googleapi/credentials.json
+googleapi/token.json
