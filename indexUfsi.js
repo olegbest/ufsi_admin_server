@@ -11,7 +11,10 @@ const cors = require('cors');
 
 const routes = require('./routes/posts');
 
-app.use(cors({credentials: true, origin: ['http://localhost:8080', 'http://www.admin.ufsi24.com','http://admin.ufsi24.com', 'https://ufsi24.com', 'http://localhost:8081']}));
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:8080', 'http://www.admin.ufsi24.com', 'http://admin.ufsi24.com', 'https://ufsi24.com', 'https://www.ufsi24.com', 'http://ufsi24.com', 'http://www.ufsi24.com', 'http://localhost:8081']
+}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
     extended: true
