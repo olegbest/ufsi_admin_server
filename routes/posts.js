@@ -234,7 +234,7 @@ setInterval(async () => {
     }
     await gSheet.add("A3:I", data);
 
-}, 5000);
+}, 10 * 60 * 1000);
 
 
 module.exports = Routes;
